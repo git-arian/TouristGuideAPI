@@ -1,9 +1,6 @@
 package com.example.touristguideapi.repository;
 import com.example.touristguideapi.model.TouristAttraction;
-import com.sun.source.tree.BreakTree;
-import org.springframework.objenesis.instantiator.basic.NewInstanceInstantiator;
 import org.springframework.stereotype.Repository;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +34,6 @@ public class TouristRepository {
         return attraction;
     }
 
-
     // Nedenstående metode
     public TouristAttraction updateAttraction(String name, TouristAttraction updatedAttraction) {
         for (TouristAttraction a : data) {
@@ -51,10 +47,14 @@ public class TouristRepository {
         return null; // hvis ikke fundet
     }
 
-    public deleteAttraction(String name, TouristAttraction attractionToDelete) {
-        if (data.contains(attractionToDelete)) {
-
+    public boolean deleteAttraction(String name) { // vi bruger {name} til at finde den specifikke attraktion vi vil fjerne
+        for (int i = 0; i < data.size(); i++) { // iterier igenne vores array med attraktion objekter (data)
+            TouristAttraction a = data.get(i); // TA objekt a sættes på data.get(i)
+            if (a.getName().equalsIgnoreCase(name)) { // hvis, a.getName = name (fra parameter), altså den name vi vil fjerne
+                data.remove(a); // så fjernes det objekt (a)
+                return true;
+            }
         }
+        return false; // hvis ikke det kunne findes, return false
     }
-
 }

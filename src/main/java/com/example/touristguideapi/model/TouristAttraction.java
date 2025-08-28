@@ -30,7 +30,6 @@ public class TouristAttraction {
         this.name = name;
     }
 
-
     public void setDescription(String description){
         this.description = description;
     }

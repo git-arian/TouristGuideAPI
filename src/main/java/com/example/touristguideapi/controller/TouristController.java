@@ -1,14 +1,9 @@
 package com.example.touristguideapi.controller;
-
 import com.example.touristguideapi.model.TouristAttraction;
-import com.example.touristguideapi.repository.TouristRepository;
 import com.example.touristguideapi.service.TouristService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,15 +25,28 @@ public class TouristController {
     // PathVariable = værdier som del af stien (identitet af ressourcen)
     // api/users{id} > api/users{43}
     // på samme måde attractions/{city} > attractions/cph, og ku på samme måde være attractions/berlin
-    @GetMapping("/{city}")
+    @GetMapping("/{city}") // endpoint
+    @ResponseBody
     public ResponseEntity<List<TouristAttraction>> getAttractionsByCity(@PathVariable String city) {
         List<TouristAttraction> attractions = service.getByCity(city);
 
-        if(attractions.isEmpty()) {
+        if (attractions.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(attractions);
     }
+
+    /*
+    CRUD (create, read, update, delete)
+
+    Flow for GET /attractions/{city} (fx /attractions/cph):
+    User → kalder http://localhost:8080/attractions/cph
+    Controller → "Service, find attraktioner i cph"
+    Service → "Repository, slå 'cph' op"
+    Repository → søger i ArrayList og returnerer en LISTE af matches
+    Service → sender listen videre op
+    Controller → hvis listen er tom: 404 Not Found ellers 200 OK med JSON
+    */
 
     @PostMapping("/add")
     @ResponseBody
@@ -47,19 +55,32 @@ public class TouristController {
         if (saved == null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(201).body(attraction);
+        return ResponseEntity.status(201).body(saved);
     }
 
-    /*
-    @PostMapping("/update/{name}")
+    // PathVariable String name, (path, string name (?name="value") (bliver læst ind som en variabel, fx /update/tivoli
+    // altså, name = tivoli (den attraktion vi vil opdatere.)
+    // @RequestBody TouristAttraction > json laves om til TA objekt > så kan det specifikke {name }TouristAttraktion objekt opdateres
+    @PostMapping("/update/{name}") // endpoint, attractions/update/{name}
     @ResponseBody
-    public ResponseEntity<TouristAttraction> updateAttraction(PathVariable String name, @RequestBody TouristAttraction updated) {
-
+    public ResponseEntity<TouristAttraction> updateAttraction(@PathVariable String name, @RequestBody TouristAttraction updated) {
+        TouristAttraction saved = service.updateAttraction(name, updated);
+        if (saved == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(saved);
     }
+   // Update -> skal vide hvem (via {name}) (@PathVariable)
+   // og hvad nyt indhold skal være (via @RequestBody)
 
+   // Delete -> skal kun vide hvem (via {name}) (@PathVariable, ikke have nye felter!!!
     @PostMapping("/delete/{name}")
-    public ResponseEntity<TouristAttraction> deleteAttraction(@RequestBody TouristAttraction attraction) {
-
+    @ResponseBody
+    public ResponseEntity<Void> deleteAttraction(@PathVariable String name) {
+        boolean deleted = service.deleteAttraction(name);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
-     */
 }

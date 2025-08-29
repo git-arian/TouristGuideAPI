@@ -1,6 +1,7 @@
 package com.example.touristguideapi.controller;
 import com.example.touristguideapi.model.TouristAttraction;
 import com.example.touristguideapi.service.TouristService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +23,25 @@ public class TouristController {
          return ResponseEntity.ok(all);
      }
 
+    @GetMapping("/name/{name}")
+    @ResponseBody
+    public ResponseEntity<List<TouristAttraction>> getAttractionsByName(@PathVariable String name) {
+        List<TouristAttraction> attractions = service.getByName(name);
+        if (attractions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(attractions, HttpStatus.OK);
+        // returner vores data/header/body (attractions) og en statuskode OK (200)
+    }
+
+
     // PathVariable = værdier som del af stien (identitet af ressourcen)
     // api/users{id} > api/users{43}
     // på samme måde attractions/{city} > attractions/cph, og ku på samme måde være attractions/berlin
-    @GetMapping("/{city}") // endpoint
+    @GetMapping("/city/{city}") // endpoint
     @ResponseBody
     public ResponseEntity<List<TouristAttraction>> getAttractionsByCity(@PathVariable String city) {
         List<TouristAttraction> attractions = service.getByCity(city);
-
         if (attractions.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -53,9 +65,9 @@ public class TouristController {
     public ResponseEntity<TouristAttraction> createAttraction(@RequestBody TouristAttraction attraction) {
         TouristAttraction saved = service.createAttraction(attraction);
         if (saved == null) {
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.status(201).body(saved);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
     // PathVariable String name, (path, string name (?name="value") (bliver læst ind som en variabel, fx /update/tivoli

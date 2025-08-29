@@ -19,6 +19,16 @@ public class TouristRepository {
         return data;
     }
 
+    public List<TouristAttraction> getByName(String name) {
+        List<TouristAttraction> result = new ArrayList<>();
+        for (TouristAttraction a : data) {
+            if (a.getName().equalsIgnoreCase(name)) {
+                result.add(a);
+            }
+        }
+        return result; //
+    }
+
     public List<TouristAttraction> getByCity(String city) { //metode find attraktion med by. fx attractions/cph > "by" = cph
         List<TouristAttraction> result = new ArrayList<>(); //opretter ny arraylist vi bruger til at gemme de specifikke attractions med den by der er søgt >>>
         for (TouristAttraction a : data) { //iterer igennem vores arraylist "data" som holder alle vores attraktioner

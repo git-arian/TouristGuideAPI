@@ -1,0 +1,226 @@
+/* det er en placeholder!!!!!! */
+
+/* Theme tokens */
+:root {
+    --c-bg: #fff;
+    --c-fg: #111;
+    --c-muted: #555;
+    --c-border: #eee;
+    --c-hover: #f5f5f5;
+
+    --radius-md: 12px;
+    --radius-sm: 8px;
+
+    --container-w: 960px;
+
+    --space-1: 8px;
+    --space-2: 12px;
+    --space-3: 16px;
+    --space-4: 20px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 40px;
+    --space-9: 72px;
+}
+
+/* Base reset */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* typography */
+    font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--c-fg);
+    /* visual */
+    background: var(--c-bg);
+}
+
+/* Better default focus (visible only when tabbing) */
+:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* Images are responsive by default */
+img,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Layout */
+.container {
+    /* box model */
+    max-width: var(--container-w);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+}
+
+/* Hero */
+.hero {
+    /* box model */
+    padding: var(--space-9) 0;
+    /* misc */
+    text-align: center;
+}
+
+.hero__title {
+    /* box model */
+    margin: 0 0 var(--space-1);
+    /* typography */
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.hero__lead {
+    /* box model */
+    margin: 0 0 var(--space-5);
+    /* typography */
+    color: var(--c-muted);
+}
+
+.hero__image {
+    /* box model */
+    width: min(360px, 80vw);
+    margin: var(--space-2) auto 0;
+    /* others */
+    display: block;
+    height: auto;
+    border-radius: var(--radius-md);
+}
+
+/* Two city images */
+.city-images {
+    /* box model */
+    margin-top: var(--space-5);
+    /* layout */
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.city-images__img {
+    /* box model */
+    width: 260px;
+    max-width: 38vw;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-border);
+    /* others */
+    display: block;
+}
+
+/* Nav (subtle) */
+nav {
+    /* visual */
+    background: var(--c-bg);
+    border-top: 1px solid var(--c-border);
+    border-bottom: 1px solid var(--c-border);
+}
+
+.nav__list {
+    /* layout */
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    /* box model */
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    padding-left: 0; /* ul reset */
+}
+
+.nav__link {
+    /* box model */
+    padding: 8px 10px; /* larger tap target */
+    border-radius: var(--radius-sm);
+    /* typography */
+    color: var(--c-fg);
+    text-decoration: none;
+}
+
+.nav__link:hover,
+.nav__link:focus-visible {
+    /* visual */
+    background: var(--c-hover);
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Sections */
+section {
+    /* box model */
+    padding: var(--space-6) 0;
+}
+
+section > h2 {
+    /* box model */
+    margin: 0 0 var(--space-1);
+    /* typography */
+    font-size: 20px;
+}
+
+section ul {
+    /* box model */
+    margin: var(--space-1) 0 0 18px;
+    padding-left: 18px;
+}
+
+/* Footer */
+footer {
+    /* visual */
+    border-top: 1px solid var(--c-border);
+    /* box model */
+    padding: var(--space-4) 0;
+    /* typography */
+    color: #666;
+    text-align: center;
+}
+
+footer a {
+    /* typography */
+    color: var(--c-fg);
+    text-decoration: none;
+}
+
+footer a:hover,
+footer a:focus-visible {
+    /* visual */
+    text-decoration: underline;
+}
+
+/* Optional: super-clean imagery (hover to color) */
+.grayscale {
+    /* visual */
+    filter: grayscale(100%);
+    /* misc */
+    transition: filter 0.2s;
+}
+
+.grayscale:hover,
+.grayscale:focus-visible {
+    filter: none;
+}
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .grayscale {
+        transition: none;
+    }
+}
+
+/*
+Udkommenteret, helt samme som Java!
+*/

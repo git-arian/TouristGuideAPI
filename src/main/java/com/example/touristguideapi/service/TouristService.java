@@ -16,6 +16,10 @@ public class TouristService {
         return repository.getAllAttractions();
     }
 
+    public List<TouristAttraction> getByName(String name) {
+        return repository.getByName(name);
+    }
+
     public List<TouristAttraction> getByCity(String city) {
         return repository.getByCity(city);
     }
